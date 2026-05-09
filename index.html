@@ -1,13 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css"
+    <title>ZEG GAME</title>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-<script src="script.js"></script>
+
+    <main class="container">
+
+        <h1>ZEG - GAME</h1>
+
+        <div class="game-screen"></div>
+
+        <div class="buttons">
+
+            <button>Start/Reset</button>
+
+            <button id="openStats">
+                Statystyka
+            </button>
+
+            <button id="openConfig">
+                Konfiguracja
+            </button>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <p>ZEG GAME - 2026</p>
+        <p>Liubomyr Vidiliuk | Ivan Bolshakow</p>
+    </footer>
+
+    <div class="modal" id="configModal">
+
+        <div class="modal-content">
+
+            <span class="close" id="closeConfig">✕</span>
+
+            <div class="modal-title">
+                Konfiguracja
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="statsModal">
+
+        <div class="modal-content">
+
+            <span class="close" id="closeStats">✕</span>
+
+            <div class="modal-title">
+                Statystyka
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
 </body>
 </html>
