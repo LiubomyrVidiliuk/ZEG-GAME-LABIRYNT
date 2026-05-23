@@ -13,7 +13,17 @@ const tileSize = 40;
 
 let currentLevel = 1;
 
-const walls = [];
+const walls = [
+
+    { x: 200, y: 0, width: 40, height: 240 },
+
+    { x: 400, y: 120, width: 40, height: 250 },
+
+    { x: 600, y: 0, width: 40, height: 220 },
+
+    { x: 760, y: 150, width: 40, height: 220 }
+
+];
 
 const finish = {
     x: 920,
@@ -129,6 +139,23 @@ function drawGrid() {
 
 }
 
+function drawWalls() {
+
+    ctx.fillStyle = "#444";
+
+    for (let wall of walls) {
+
+        ctx.fillRect(
+            wall.x,
+            wall.y,
+            wall.width,
+            wall.height
+        );
+
+    }
+
+}
+
 function drawPlayer() {
 
     ctx.fillStyle = player.color;
@@ -146,6 +173,7 @@ function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
+    drawWalls();
 
     movePlayer();
 
