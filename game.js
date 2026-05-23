@@ -172,6 +172,21 @@ function drawFinish() {
 
 }
 
+function drawLevel() {
+
+    // poziom player
+    ctx.fillStyle = "white";
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+        "Level: " + currentLevel,
+        20,
+        30
+    );
+
+}
+
 function drawPlayer() {
 
     ctx.fillStyle = player.color;
@@ -213,6 +228,9 @@ function gameLoop() {
 
     // dodanie punkta koncowego
     drawFinish();
+
+    // level
+    drawLevel();
 
     movePlayer();
 
