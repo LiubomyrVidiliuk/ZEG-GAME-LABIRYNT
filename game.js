@@ -13,18 +13,32 @@ const tileSize = 40;
 
 let currentLevel = 1;
 
-const walls = [
-    // tutaj sciany
+let walls = [];
 
-    { x: 200, y: 0, width: 40, height: 240 },
+function generateWalls() {
 
-    { x: 400, y: 120, width: 40, height: 250 },
+    walls = [];
 
-    { x: 600, y: 0, width: 40, height: 220 },
+    // tu losowe scian
+    for (let i = 0; i < 6; i++) {
 
-    { x: 760, y: 150, width: 40, height: 220 }
+        const wall = {
 
-];
+            x: Math.floor(Math.random() * 20) * tileSize,
+
+            y: Math.floor(Math.random() * 8) * tileSize,
+
+            width: tileSize,
+
+            height: Math.floor(Math.random() * 4 + 2) * tileSize
+
+        };
+
+        walls.push(wall);
+
+    }
+
+}
 
 const finish = {
     x: 920,
@@ -58,6 +72,8 @@ document.addEventListener("keyup", function (event) {
 startButton.onclick = function () {
 
     resetGame();
+
+    generateWalls();
 
     gameStarted = true;
 
@@ -269,6 +285,8 @@ function checkFinish() {
 
         // nowypoziom
         currentLevel++;
+
+        generateWalls();
 
         resetGame();
 
