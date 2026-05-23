@@ -9,7 +9,6 @@ const startButton = document.querySelector(".buttons button");
 
 let gameStarted = false;
 
-<<<<<<< HEAD
 const tileSize = 40;
 
 let currentLevel = 1;
@@ -23,8 +22,6 @@ const finish = {
     color: "gold"
 };
 
-=======
->>>>>>> d5eacd2bb203d8738c706eb70cf89cde9c1786c2
 const player = {
     x: 50,
     y: 50,
@@ -102,6 +99,36 @@ function movePlayer() {
 
 }
 
+function drawGrid() {
+
+    ctx.strokeStyle = "#1f1f1f";
+
+    for (let x = 0; x < canvas.width; x += tileSize) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(x, 0);
+
+        ctx.lineTo(x, canvas.height);
+
+        ctx.stroke();
+
+    }
+
+    for (let y = 0; y < canvas.height; y += tileSize) {
+
+        ctx.beginPath();
+
+        ctx.moveTo(0, y);
+
+        ctx.lineTo(canvas.width, y);
+
+        ctx.stroke();
+
+    }
+
+}
+
 function drawPlayer() {
 
     ctx.fillStyle = player.color;
@@ -118,6 +145,7 @@ function drawPlayer() {
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
 
     movePlayer();
 
