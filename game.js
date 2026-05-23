@@ -70,26 +70,62 @@ function resetGame() {
 
 }
 
+function checkWallCollision(x, y) {
+
+    // tutaj sprawdzenie kolizji
+    for (let wall of walls) {
+
+        if (
+            x < wall.x + wall.width &&
+            x + player.size > wall.x &&
+            y < wall.y + wall.height &&
+            y + player.size > wall.y
+        ) {
+
+            return true;
+
+        }
+
+    }
+
+    return false;
+
+}
+
 function movePlayer() {
 
     if (!gameStarted) {
         return;
     }
 
+    // nowa pozycja player
+    let nextX = player.x;
+
+    let nextY = player.y;
+
     if (keys["w"]) {
-        player.y -= player.speed;
+        nextY -= player.speed;
     }
 
     if (keys["s"]) {
-        player.y += player.speed;
+        nextY += player.speed;
     }
 
     if (keys["a"]) {
-        player.x -= player.speed;
+        nextX -= player.speed;
     }
 
     if (keys["d"]) {
-        player.x += player.speed;
+        nextX += player.speed;
+    }
+
+    // jeszli nie ma kolizji z scianiom
+    if (!checkWallCollision(nextX, nextY)) {
+
+        player.x = nextX;
+
+        player.y = nextY;
+
     }
 
     if (player.x < 0) {
