@@ -12,6 +12,7 @@ let gameStarted = false;
 const tileSize = 40;
 
 let currentLevel = 1;
+let levelMessage = "";
 
 let walls = [];
 
@@ -285,12 +286,27 @@ function checkFinish() {
 
         // nowypoziom
         currentLevel++;
+        levelMessage = "nowe level";
 
         generateWalls();
 
         resetGame();
 
     }
+
+}
+
+function drawLevelMessage() {
+
+    ctx.fillStyle = "yellow";
+
+    ctx.font = "26px Arial";
+
+    ctx.fillText(
+        levelMessage,
+        400,
+        40
+    );
 
 }
 
@@ -310,6 +326,7 @@ function gameLoop() {
 
     // level
     drawLevel();
+    drawLevelMessage();
 
     movePlayer();
 
