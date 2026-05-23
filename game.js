@@ -14,6 +14,7 @@ const tileSize = 40;
 let currentLevel = 1;
 
 const walls = [
+    // tutaj sciany
 
     { x: 200, y: 0, width: 40, height: 240 },
 
@@ -141,6 +142,7 @@ function drawGrid() {
 
 function drawWalls() {
 
+    // to jest color scian
     ctx.fillStyle = "#444";
 
     for (let wall of walls) {
@@ -153,6 +155,20 @@ function drawWalls() {
         );
 
     }
+
+}
+
+function drawFinish() {
+
+    // kolor j
+    ctx.fillStyle = finish.color;
+
+    ctx.fillRect(
+        finish.x,
+        finish.y,
+        finish.size,
+        finish.size
+    );
 
 }
 
@@ -173,8 +189,12 @@ function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
+
+    // rysowanie sciand
     drawWalls();
 
+    drawFinish();
+    
     movePlayer();
 
     drawPlayer();
