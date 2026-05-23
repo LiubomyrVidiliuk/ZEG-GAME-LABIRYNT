@@ -146,6 +146,28 @@ function movePlayer() {
 
 }
 
+// punk startowy
+const startPoint = {
+    x: 40,
+    y: 40,
+    size: 40,
+    color: "blue"
+};
+
+function drawStartPoint() {
+
+    // punkt startowy
+    ctx.fillStyle = startPoint.color;
+
+    ctx.fillRect(
+        startPoint.x,
+        startPoint.y,
+        startPoint.size,
+        startPoint.size
+    );
+
+}
+
 function drawGrid() {
 
     ctx.strokeStyle = "#1f1f1f";
@@ -264,6 +286,9 @@ function gameLoop() {
 
     // dodanie punkta koncowego
     drawFinish();
+
+    // startowy punkt
+    drawStartPoint();
 
     // level
     drawLevel();
