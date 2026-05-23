@@ -185,6 +185,24 @@ function drawPlayer() {
 
 }
 
+function checkFinish() {
+
+    if (
+        player.x < finish.x + finish.size &&
+        player.x + player.size > finish.x &&
+        player.y < finish.y + finish.size &&
+        player.y + player.size > finish.y
+    ) {
+
+        // nowypoziom
+        currentLevel++;
+
+        resetGame();
+
+    }
+
+}
+
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -193,9 +211,13 @@ function gameLoop() {
     // rysowanie sciand
     drawWalls();
 
+    // dodanie punkta koncowego
     drawFinish();
-    
+
     movePlayer();
+
+    // sprawdzenie punkta koncowego
+    checkFinish();
 
     drawPlayer();
 
