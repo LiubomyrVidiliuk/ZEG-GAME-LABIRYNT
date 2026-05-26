@@ -94,6 +94,21 @@ function resetGame() {
 
 }
 
+// rysowanie zdorowia
+function drawHealth() {
+
+    ctx.fillStyle = "white";
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+        "HP: " + player.health + "/" + player.maxHealth,
+        850,
+        30
+    );
+
+}
+
 function checkWallCollision(x, y) {
 
     // tutaj sprawdzenie kolizji
@@ -333,6 +348,10 @@ function gameLoop() {
 
     // level
     drawLevel();
+
+    // rysowanie zdrowia
+    drawHealth();
+
     drawLevelMessage();
 
     movePlayer();
