@@ -400,7 +400,28 @@ function generateHealthItem() {
             healthItem.x = randomX;
             healthItem.y = randomY;
 
+            healthItem.active = true;
         }
+
+    }
+
+}
+
+function checkHealthItem() {
+
+    if (!healthItem.active) {
+        return;
+    }
+
+    if (
+        player.x < healthItem.x + healthItem.size &&
+        player.x + player.size > healthItem.x &&
+        player.y < healthItem.y + healthItem.size &&
+        player.y + player.size > healthItem.y
+    ) {
+
+        // schowanie apteczki
+        healthItem.active = false;
 
     }
 
@@ -432,6 +453,9 @@ function gameLoop() {
     drawLevelMessage();
 
     movePlayer();
+
+    // sprawdzenie przedmiotu apteczka
+    checkHealthItem();
 
     // sprawdzenie punkta koncowego
     checkFinish();
