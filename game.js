@@ -53,7 +53,11 @@ const player = {
     y: 50,
     size: 30,
     speed: 5,
-    color: "lime"
+    color: "lime",
+
+    // dodanie zdrowie
+    health: 100,
+    maxHealth: 100
 };
 
 const keys = {};
@@ -84,6 +88,9 @@ function resetGame() {
 
     player.x = 50;
     player.y = 50;
+
+    // reset health
+    player.health = player.maxHealth;
 
 }
 
