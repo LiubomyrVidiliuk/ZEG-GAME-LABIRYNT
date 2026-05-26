@@ -332,6 +332,38 @@ function drawLevelMessage() {
 
 }
 
+const healthItem = {
+
+    x: 300,
+    y: 120,
+
+    // wielkosc tego przedmiotu
+    size: 25,
+
+    color: "red",
+
+    active: true
+
+};
+
+function drawHealthItem() {
+
+    if (!healthItem.active) {
+        return;
+    }
+
+    // kolor naszego przedmiotu
+    ctx.fillStyle = healthItem.color;
+
+    ctx.fillRect(
+        healthItem.x,
+        healthItem.y,
+        healthItem.size,
+        healthItem.size
+    );
+
+}
+
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -342,6 +374,9 @@ function gameLoop() {
 
     // dodanie punkta koncowego
     drawFinish();
+
+    // rysowanie przedmiotow
+    drawHealthItem();
 
     // startowy punkt
     drawStartPoint();
