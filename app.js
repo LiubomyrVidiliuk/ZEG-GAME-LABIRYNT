@@ -62,3 +62,52 @@ window.onclick = function (event) {
     }
 
 };
+
+const submitRiddle =
+    document.getElementById(
+        "submitRiddle"
+    );
+
+submitRiddle.onclick = function () {
+
+    const answer =
+        Number(
+            document.getElementById(
+                "riddleAnswer"
+            ).value
+        );
+
+    const result =
+        document.getElementById(
+            "riddleResult"
+        );
+
+    if (
+        answer ===
+        currentRiddle.answer
+    ) {
+
+        result.innerText =
+            "Poprawna odpowiedź";
+
+        setTimeout(function(){
+
+            closeModal(
+                riddleModal
+            );
+
+        },1000);
+
+    }
+
+    else {
+
+        result.innerText =
+            "Przegrana. Prawidłowa odpowiedź: "
+            + currentRiddle.answer;
+
+        player.health = 0;
+
+    }
+
+};

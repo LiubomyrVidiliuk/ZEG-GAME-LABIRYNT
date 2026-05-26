@@ -89,6 +89,37 @@ startButton.onclick = function () {
 
 };
 
+const riddles = [
+
+    {
+        question: "5 + 7",
+        answer: 12
+    },
+
+    {
+        question: "8 × 4",
+        answer: 32
+    },
+
+    {
+        question: "36 ÷ 6",
+        answer: 6
+    },
+
+    {
+        question: "15 - 8",
+        answer: 7
+    },
+
+    {
+        question: "9 × 9",
+        answer: 81
+    }
+
+];
+
+let currentRiddle = null;
+
 function resetGame() {
 
     player.x = 50;
@@ -240,7 +271,30 @@ function checkRiddleItem() {
 
         riddleItem.active = false;
 
-        document.getElementById("riddleModal").style.display = "block";
+        currentRiddle =
+            riddles[
+                Math.floor(
+                    Math.random() *
+                    riddles.length
+                )
+            ];
+
+        document.getElementById(
+            "riddleQuestion"
+        ).innerText =
+            currentRiddle.question;
+
+        document.getElementById(
+            "riddleAnswer"
+        ).value = "";
+
+        document.getElementById(
+            "riddleResult"
+        ).innerText = "";
+
+        document.getElementById(
+            "riddleModal"
+        ).style.display = "block";
 
     }
 
