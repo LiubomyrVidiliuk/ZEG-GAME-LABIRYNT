@@ -80,7 +80,10 @@ startButton.onclick = function () {
     resetGame();
 
     generateWalls();
+
     generateHealthItem();
+
+    generateRiddleItem();
 
     gameStarted = true;
 
@@ -131,6 +134,118 @@ function drawGameOver() {
     );
 
 }
+
+const riddleItem = {
+
+    x: 0,
+    y: 0,
+    size: 25,
+    color: "purple",
+    active: true
+
+};
+
+function drawRiddleItem() {
+
+    if (!riddleItem.active) {
+        return;
+    }
+
+    ctx.fillStyle = riddleItem.color;
+
+    ctx.fillRect(
+        riddleItem.x,
+        riddleItem.y,
+        riddleItem.size,
+        riddleItem.size
+    );
+
+}
+
+function generateRiddleItem() {
+
+    let validPosition = false;
+
+    while (!validPosition) {
+
+        const randomX = Math.floor(Math.random() * 24) * tileSize;
+        const randomY = Math.floor(Math.random() * 8) * tileSize;
+
+        validPosition = true;
+
+        for (let wall of walls) {
+
+            if (
+                randomX < wall.x + wall.width &&
+                randomX + riddleItem.size > wall.x &&
+                randomY < wall.y + wall.height &&
+                randomY + riddleItem.size > wall.y
+            ) {
+
+                validPosition = false;
+                break;
+
+            }
+
+        }
+
+        if (
+            validPosition &&
+            randomX < healthItem.x + healthItem.size &&
+            randomX + riddleItem.size > healthItem.x &&
+            randomY < healthItem.y + healthItem.size &&
+            randomY + riddleItem.size > healthItem.y
+        ) {
+
+            validPosition = false;
+
+        }
+
+        if (
+            validPosition &&
+            randomX < startPoint.x + startPoint.size &&
+            randomX + riddleItem.size > startPoint.x &&
+            randomY < startPoint.y + startPoint.size &&
+            randomY + riddleItem.size > startPoint.y
+        ) {
+
+            validPosition = false;
+
+        }
+
+        if (validPosition) {
+
+            riddleItem.x = randomX;
+            riddleItem.y = randomY;
+            riddleItem.active = true;
+
+        }
+
+    }
+
+}
+
+function checkRiddleItem() {
+
+    if (!riddleItem.active) {
+        return;
+    }
+
+    if (
+        player.x < riddleItem.x + riddleItem.size &&
+        player.x + player.size > riddleItem.x &&
+        player.y < riddleItem.y + riddleItem.size &&
+        player.y + player.size > riddleItem.y
+    ) {
+
+        riddleItem.active = false;
+
+        document.getElementById("riddleModal").style.display = "block";
+
+    }
+
+}
+
 
 // rysowanie zdorowia
 function drawHealth() {
@@ -351,6 +466,8 @@ function checkFinish() {
         generateWalls();
         generateHealthItem();
 
+        generateRiddleItem();
+
         resetGame();
 
     }
@@ -487,6 +604,9 @@ function gameLoop() {
     // rysowanie przedmiotow
     drawHealthItem();
 
+    // rysoawnie przedmiotu dla zagadek
+    drawRiddleItem();
+
     // startowy punkt
     drawStartPoint();
 
@@ -502,6 +622,8 @@ function gameLoop() {
 
     // sprawdzenie przedmiotu apteczka
     checkHealthItem();
+
+    checkRiddleItem();
 
     checkGameOver();
 

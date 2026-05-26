@@ -7,6 +7,10 @@ const statsModal = document.getElementById("statsModal");
 const closeConfig = document.getElementById("closeConfig");
 const closeStats = document.getElementById("closeStats");
 
+const riddleModal = document.getElementById("riddleModal");
+
+const closeRiddle = document.getElementById("closeRiddle");
+
 openConfig.onclick = function () {
     configModal.style.display = "block";
 };
@@ -39,6 +43,10 @@ closeStats.onclick = function () {
     closeModal(statsModal);
 };
 
+closeRiddle.onclick = function () {
+    closeModal(riddleModal);
+};
+
 window.onclick = function (event) {
 
     if (event.target === configModal) {
@@ -47,6 +55,10 @@ window.onclick = function (event) {
 
     if (event.target === statsModal) {
         closeModal(statsModal);
+    }
+
+    if (event.target === riddleModal) {
+        closeModal(riddleModal);
     }
 
 };
