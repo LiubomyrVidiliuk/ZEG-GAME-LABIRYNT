@@ -79,6 +79,7 @@ startButton.onclick = function () {
     resetGame();
 
     generateWalls();
+    generateHealthItem();
 
     gameStarted = true;
 
@@ -311,6 +312,7 @@ function checkFinish() {
         levelMessage = "nowe level";
 
         generateWalls();
+        generateHealthItem();
 
         resetGame();
 
@@ -334,8 +336,8 @@ function drawLevelMessage() {
 
 const healthItem = {
 
-    x: 300,
-    y: 120,
+    x: 0,
+    y: 0,
 
     // wielkosc tego przedmiotu
     size: 25,
@@ -361,6 +363,46 @@ function drawHealthItem() {
         healthItem.size,
         healthItem.size
     );
+
+}
+
+function generateHealthItem() {
+
+    let validPosition = false;
+
+    while (!validPosition) {
+
+        const randomX = Math.floor(Math.random() * 24) * tileSize;
+        const randomY = Math.floor(Math.random() * 8) * tileSize;
+
+        validPosition = true;
+
+        for (let wall of walls) {
+
+            if (
+                randomX < wall.x + wall.width &&
+                randomX + healthItem.size > wall.x &&
+                randomY < wall.y + wall.height &&
+                randomY + healthItem.size > wall.y
+            ) {
+
+                validPosition = false;
+
+                break;
+
+            }
+
+        }
+
+        if (validPosition) {
+
+            // tutaj jest nowa pozycja przedmiotu
+            healthItem.x = randomX;
+            healthItem.y = randomY;
+
+        }
+
+    }
 
 }
 
