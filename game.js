@@ -8,6 +8,7 @@ canvas.height = 370;
 const startButton = document.querySelector(".buttons button");
 
 let gameStarted = false;
+let gameOver = false;
 
 const tileSize = 40;
 
@@ -92,6 +93,42 @@ function resetGame() {
 
     // reset health
     player.health = player.maxHealth;
+
+    gameOver = false;
+
+}
+
+function checkGameOver() {
+
+    if (player.health <= 0) {
+
+        player.health = 0;
+
+        currentLevel = 0;
+
+        gameStarted = false;
+
+        gameOver = true;
+
+    }
+
+}
+
+function drawGameOver() {
+
+    if (!gameOver) {
+        return;
+    }
+
+    ctx.fillStyle = "red";
+
+    ctx.font = "50px Arial";
+
+    ctx.fillText(
+        "ИГРА ОКОНЧЕНА",
+        300,
+        180
+    );
 
 }
 
@@ -420,6 +457,15 @@ function checkHealthItem() {
         player.y + player.size > healthItem.y
     ) {
 
+        // leczenie player
+        player.health += 20;
+
+        if (player.health > player.maxHealth) {
+
+           player.health = player.maxHealth;
+
+        }
+
         // schowanie apteczki
         healthItem.active = false;
 
@@ -457,11 +503,14 @@ function gameLoop() {
     // sprawdzenie przedmiotu apteczka
     checkHealthItem();
 
+    checkGameOver();
+
     // sprawdzenie punkta koncowego
     checkFinish();
 
     drawPlayer();
 
+    drawGameOver();
     requestAnimationFrame(gameLoop);
 
 }
