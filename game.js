@@ -58,6 +58,130 @@ function generateWalls() {
 
 }
 
+const deathItems = [];
+
+for (let i = 0; i < 2; i++) {
+
+    deathItems.push({
+        x: 0,
+        y: 0,
+        size: 25,
+        color: "white",
+        active: true
+    });
+
+}
+
+function drawDeathItem() {
+
+    for (let item of deathItems) {
+
+        if (!item.active) {
+            continue;
+        }
+
+        ctx.fillStyle = item.color;
+
+        ctx.fillRect(
+            item.x,
+            item.y,
+            item.size,
+            item.size
+        );
+
+    }
+
+}
+
+function generateDeathItem() {
+
+    for (let item of deathItems) {
+
+        let validPosition = false;
+
+        while (!validPosition) {
+
+            const randomX = Math.floor(Math.random() * 24) * tileSize;
+            const randomY = Math.floor(Math.random() * 8) * tileSize;
+
+            validPosition = true;
+
+            for (let wall of walls) {
+
+                if (
+                    randomX < wall.x + wall.width &&
+                    randomX + item.size > wall.x &&
+                    randomY < wall.y + wall.height &&
+                    randomY + item.size > wall.y
+                ) {
+
+                    validPosition = false;
+                    break;
+
+                }
+
+            }
+
+            const blockedItems = [
+                healthItem,
+                riddleItem,
+                startPoint,
+                finish
+            ];
+
+            for (let blocked of blockedItems) {
+
+                if (
+                    randomX < blocked.x + blocked.size &&
+                    randomX + item.size > blocked.x &&
+                    randomY < blocked.y + blocked.size &&
+                    randomY + item.size > blocked.y
+                ) {
+
+                    validPosition = false;
+                    break;
+
+                }
+
+            }
+
+            if (validPosition) {
+
+                item.x = randomX;
+                item.y = randomY;
+
+            }
+
+        }
+
+    }
+
+}
+
+function checkDeathItem() {
+
+    for (let item of deathItems) {
+
+        if (!item.active) {
+            continue;
+        }
+
+        if (
+            player.x < item.x + item.size &&
+            player.x + player.size > item.x &&
+            player.y < item.y + item.size &&
+            player.y + player.size > item.y
+        ) {
+
+            player.health = 0;
+
+        }
+
+    }
+
+}
+
+
 const finish = {
     x: 920,
     y: 280,
@@ -100,6 +224,8 @@ startButton.onclick = function () {
     generateHealthItem();
 
     generateRiddleItem();
+
+    generateDeathItem();
 
     gameStarted = true;
 
@@ -538,6 +664,8 @@ function checkFinish() {
 
         generateRiddleItem();
 
+        generateDeathItem();
+
         resetGame();
 
     }
@@ -677,6 +805,9 @@ function gameLoop() {
     // rysoawnie przedmiotu dla zagadek
     drawRiddleItem();
 
+    // rysowanie death item
+    drawDeathItem();
+
     // startowy punkt
     drawStartPoint();
 
@@ -694,6 +825,9 @@ function gameLoop() {
     checkHealthItem();
 
     checkRiddleItem();
+
+    // sprawdzanie na death item
+    checkDeathItem();
 
     checkGameOver();
 
