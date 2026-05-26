@@ -125,7 +125,7 @@ function drawGameOver() {
     ctx.font = "50px Arial";
 
     ctx.fillText(
-        "ИГРА ОКОНЧЕНА",
+        "GAME OVER",
         300,
         180
     );
