@@ -21,22 +21,38 @@ function generateWalls() {
 
     walls = [];
 
-    // tu losowe scian
-    for (let i = 0; i < 6; i++) {
+    const maze = [
 
-        const wall = {
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        [0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1],
+        [1,0,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,0,1,1,1,0,1],
+        [1,0,1,0,0,0,0,1,1,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,1],
+        [1,0,1,1,1,1,0,1,0,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1],
+        [1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1],
+        [1,1,1,1,0,1,1,1,1,0,0,1,0,1,1,1,0,1,0,1,1,0,0,0,1],
+        [1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 
-            x: Math.floor(Math.random() * 20) * tileSize,
+    ];
 
-            y: Math.floor(Math.random() * 8) * tileSize,
+    for (let row = 0; row < maze.length; row++) {
 
-            width: tileSize,
+        for (let col = 0; col < maze[row].length; col++) {
 
-            height: Math.floor(Math.random() * 4 + 2) * tileSize
+            if (maze[row][col] === 1) {
 
-        };
+                walls.push({
 
-        walls.push(wall);
+                    x: col * tileSize,
+                    y: row * tileSize,
+                    width: tileSize,
+                    height: tileSize
+
+                });
+
+            }
+
+        }
 
     }
 
