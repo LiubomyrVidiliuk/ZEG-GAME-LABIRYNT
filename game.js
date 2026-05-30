@@ -556,7 +556,7 @@ function drawDoors() {
             continue;
         }
 
-        ctx.fillStyle = "brown";
+        ctx.fillStyle = "yellow";
 
         ctx.fillRect(
             door.x,
@@ -591,7 +591,7 @@ function checkDoors() {
         }
 
     }
-//
+
 }
 
 // rysowanie zdorowia
@@ -619,9 +619,7 @@ function checkWallCollision(x, y) {
             y < wall.y + wall.height &&
             y + player.size > wall.y
         ) {
-
             return true;
-
         }
 
     }
@@ -639,8 +637,15 @@ function checkWallCollision(x, y) {
             y + player.size > door.y
         ) {
 
-            return true;
+            if (collectedKeys > 0) {
 
+                collectedKeys--;
+                door.opened = true;
+
+                return false;
+            }
+
+            return true;
         }
 
     }
@@ -1011,8 +1016,6 @@ function gameLoop() {
     // sprawdzenie zebrania klucza
     checkKeys();
 
-    // sprawdzenie otwierania drzwi
-    checkDoors();
 
     checkGameOver();
 
