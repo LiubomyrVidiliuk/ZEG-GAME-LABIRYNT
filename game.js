@@ -265,6 +265,16 @@ startButton.onclick = function () {
 
     generateDeathItem();
 
+    collectedKeys = 0;
+
+    for (let key of keyItems) {
+        key.active = true;
+    }
+
+    for (let door of doors) {
+         door.opened = false;
+    }
+
     gameStarted = true;
 
 };
@@ -601,7 +611,6 @@ function drawHealth() {
 
 function checkWallCollision(x, y) {
 
-    // tutaj sprawdzenie kolizji
     for (let wall of walls) {
 
         if (
@@ -609,6 +618,25 @@ function checkWallCollision(x, y) {
             x + player.size > wall.x &&
             y < wall.y + wall.height &&
             y + player.size > wall.y
+        ) {
+
+            return true;
+
+        }
+
+    }
+
+    for (let door of doors) {
+
+        if (door.opened) {
+            continue;
+        }
+
+        if (
+            x < door.x + door.width &&
+            x + player.size > door.x &&
+            y < door.y + door.height &&
+            y + player.size > door.y
         ) {
 
             return true;
@@ -932,6 +960,7 @@ function checkHealthItem() {
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     drawGrid();
 
     // rysowanie sciand
@@ -949,6 +978,12 @@ function gameLoop() {
     // rysowanie death item
     drawDeathItem();
 
+    // rysowanie drzwi
+    drawDoors();
+
+    // rysowanie kluczy
+    drawKeys();
+
     // startowy punkt
     drawStartPoint();
 
@@ -957,6 +992,9 @@ function gameLoop() {
 
     // rysowanie zdrowia
     drawHealth();
+
+    // licznik kluczy
+    drawKeysCounter();
 
     drawLevelMessage();
 
@@ -970,6 +1008,12 @@ function gameLoop() {
     // sprawdzanie na death item
     checkDeathItem();
 
+    // sprawdzenie zebrania klucza
+    checkKeys();
+
+    // sprawdzenie otwierania drzwi
+    checkDoors();
+
     checkGameOver();
 
     // sprawdzenie punkta koncowego
@@ -978,6 +1022,7 @@ function gameLoop() {
     drawPlayer();
 
     drawGameOver();
+
     requestAnimationFrame(gameLoop);
 
 }
