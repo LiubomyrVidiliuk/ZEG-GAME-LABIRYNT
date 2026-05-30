@@ -518,6 +518,47 @@ function drawKeysCounter() {
 
 }
 
+const doors = [
+
+    {
+        x: 360,
+        y: 120,
+        width: 40,
+        height: 40,
+        opened: false
+    },
+
+    {
+        x: 640,
+        y: 200,
+        width: 40,
+        height: 40,
+        opened: false
+    }
+
+];
+
+function drawDoors() {
+
+    for (let door of doors) {
+
+        if (door.opened) {
+            continue;
+        }
+
+        ctx.fillStyle = "brown";
+
+        ctx.fillRect(
+            door.x,
+            door.y,
+            door.width,
+            door.height
+        );
+
+    }
+
+}
+
 // rysowanie zdorowia
 function drawHealth() {
 
