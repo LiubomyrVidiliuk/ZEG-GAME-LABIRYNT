@@ -581,7 +581,7 @@ function checkDoors() {
         }
 
     }
-
+//
 }
 
 // rysowanie zdorowia
