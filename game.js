@@ -480,6 +480,43 @@ function checkRiddleItem() {
 
 }
 
+function checkKeys() {
+
+    for (let key of keyItems) {
+
+        if (!key.active) {
+            continue;
+        }
+
+        if (
+            player.x < key.x + key.size &&
+            player.x + player.size > key.x &&
+            player.y < key.y + key.size &&
+            player.y + player.size > key.y
+        ) {
+
+            key.active = false;
+            collectedKeys++;
+
+        }
+
+    }
+
+}
+
+function drawKeysCounter() {
+
+    ctx.fillStyle = "white";
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+        "Keys: " + collectedKeys,
+        850,
+        60
+    );
+
+}
 
 // rysowanie zdorowia
 function drawHealth() {
