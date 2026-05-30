@@ -559,6 +559,31 @@ function drawDoors() {
 
 }
 
+function checkDoors() {
+
+    for (let door of doors) {
+
+        if (door.opened) {
+            continue;
+        }
+
+        if (
+            collectedKeys > 0 &&
+            player.x < door.x + door.width &&
+            player.x + player.size > door.x &&
+            player.y < door.y + door.height &&
+            player.y + player.size > door.y
+        ) {
+
+            collectedKeys--;
+            door.opened = true;
+
+        }
+
+    }
+
+}
+
 // rysowanie zdorowia
 function drawHealth() {
 
