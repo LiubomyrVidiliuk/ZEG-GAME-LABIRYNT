@@ -72,6 +72,44 @@ for (let i = 0; i < 2; i++) {
 
 }
 
+let collectedKeys = 0;
+
+const keyItems = [
+    {
+        x: 200,
+        y: 80,
+        size: 25,
+        active: true
+    },
+    {
+        x: 720,
+        y: 240,
+        size: 25,
+        active: true
+    }
+];
+
+function drawKeys() {
+
+    ctx.fillStyle = "cyan";
+
+    for (let key of keyItems) {
+
+        if (!key.active) {
+            continue;
+        }
+
+        ctx.fillRect(
+            key.x,
+            key.y,
+            key.size,
+            key.size
+        );
+
+    }
+
+}
+
 function drawDeathItem() {
 
     for (let item of deathItems) {
