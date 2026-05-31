@@ -1017,6 +1017,8 @@ function checkHealthItem() {
 
 function checkSpikes() {
 
+    const now = Date.now();
+
     for (let spike of spikes) {
 
         if (
@@ -1026,13 +1028,20 @@ function checkSpikes() {
             player.y + player.size > spike.y
         ) {
 
-            player.health -= 1;
+            if (now - lastSpikeHit > 500) {
+
+                player.health -= 10;
+                lastSpikeHit = now;
+
+            }
 
         }
 
     }
 
 }
+
+let lastSpikeHit = 0;
 
 function gameLoop() {
 
@@ -1080,7 +1089,7 @@ function gameLoop() {
     movePlayer();
 
     checkSpikes();
-    
+
     // sprawdzenie przedmiotu apteczka
     checkHealthItem();
 
