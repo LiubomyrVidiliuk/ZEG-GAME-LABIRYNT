@@ -1015,6 +1015,25 @@ function checkHealthItem() {
 
 }
 
+function checkSpikes() {
+
+    for (let spike of spikes) {
+
+        if (
+            player.x < spike.x + spike.width &&
+            player.x + player.size > spike.x &&
+            player.y < spike.y + spike.height &&
+            player.y + player.size > spike.y
+        ) {
+
+            player.health -= 1;
+
+        }
+
+    }
+
+}
+
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1060,6 +1079,8 @@ function gameLoop() {
 
     movePlayer();
 
+    checkSpikes();
+    
     // sprawdzenie przedmiotu apteczka
     checkHealthItem();
 
