@@ -664,6 +664,40 @@ function isAnyModalOpen() {
 
 }
 
+const spikes = [
+
+    {
+        x: 280,
+        y: 120,
+        width: 40,
+        height: 40
+    },
+
+    {
+        x: 520,
+        y: 240,
+        width: 40,
+        height: 40
+    }
+
+];
+
+function drawSpikes() {
+
+    ctx.fillStyle = "orange";
+
+    for (let spike of spikes) {
+
+        ctx.fillRect(
+            spike.x,
+            spike.y,
+            spike.width,
+            spike.height
+        );
+
+    }
+
+}
 function movePlayer() {
 
     if (!gameStarted) {
@@ -1004,6 +1038,8 @@ function gameLoop() {
 
     // rysowanie drzwi
     drawDoors();
+
+    drawSpikes();
 
     // rysowanie kluczy
     drawKeys();
