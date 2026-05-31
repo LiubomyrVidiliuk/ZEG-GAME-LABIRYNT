@@ -654,9 +654,28 @@ function checkWallCollision(x, y) {
 
 }
 
+function isAnyModalOpen() {
+
+    return (
+        getComputedStyle(configModal).display !== "none" ||
+        getComputedStyle(statsModal).display !== "none" ||
+        getComputedStyle(riddleModal).display !== "none"
+    );
+
+}
+
 function movePlayer() {
 
     if (!gameStarted) {
+        return;
+    }
+
+
+    if (isAnyModalOpen()) {
+        keys["w"] = false;
+        keys["a"] = false;
+        keys["s"] = false;
+        keys["d"] = false;
         return;
     }
 
