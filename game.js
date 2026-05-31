@@ -667,33 +667,57 @@ function isAnyModalOpen() {
 const spikes = [
 
     {
-        x: 280,
-        y: 120,
+        x: 240,
+        y: 140,
         width: 40,
-        height: 40
+        height: 15
     },
 
     {
-        x: 520,
-        y: 240,
+        x: 480,
+        y: 145,
         width: 40,
-        height: 40
+        height: 15
     }
 
 ];
 
+
 function drawSpikes() {
 
-    ctx.fillStyle = "orange";
+    ctx.fillStyle = "silver";
 
     for (let spike of spikes) {
 
-        ctx.fillRect(
-            spike.x,
-            spike.y,
-            spike.width,
-            spike.height
-        );
+        const toothWidth = 10;
+
+        const count =
+            Math.floor(
+                spike.width / toothWidth
+            );
+
+        for (let i = 0; i < count; i++) {
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                spike.x + i * toothWidth,
+                spike.y + spike.height
+            );
+
+            ctx.lineTo(
+                spike.x + i * toothWidth + toothWidth / 2,
+                spike.y
+            );
+
+            ctx.lineTo(
+                spike.x + (i + 1) * toothWidth,
+                spike.y + spike.height
+            );
+
+            ctx.fill();
+
+        }
 
     }
 
