@@ -2,8 +2,8 @@ const canvas = document.getElementById("gameCanvas");
 
 const ctx = canvas.getContext("2d");
 
-canvas.width = 1000;
-canvas.height = 370;
+canvas.width = 1200;
+canvas.height = 600;
 
 const startButton = document.querySelector(".buttons button");
 
@@ -23,17 +23,37 @@ function generateWalls() {
 
     const maze = [
 
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1],
-        [1,0,1,0,1,0,1,1,0,0,0,1,0,1,0,1,1,0,1,0,1,1,1,0,1],
-        [1,0,1,0,0,0,0,1,1,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,1],
-        [1,0,1,1,1,1,0,1,0,0,1,1,1,0,1,1,0,1,1,0,1,1,1,0,1],
-        [1,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,1,0,1],
-        [1,1,1,1,0,1,1,1,1,0,0,1,0,1,1,1,0,1,0,1,1,0,0,0,1],
-        [1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
-    ];
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
+
+[1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,0,1],
+
+[1,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,1],
+
+[1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,0,1,1],
+
+[1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1],
+
+[1,1,1,1,1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,0,1],
+
+[1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+
+[1,0,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1],
+
+[1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,1],
+
+[1,1,1,0,1,1,1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,0,1],
+
+[1,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1],
+
+[1,0,1,1,1,0,1,1,1,1,1,0,1,0,1,1,1,0,1,1,1,1,1,1,0,1,1,1,0,1],
+
+[1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+
+];
 
     for (let row = 0; row < maze.length; row++) {
 
@@ -77,7 +97,7 @@ let collectedKeys = 0;
 const keyItems = [
     {
         x: 200,
-        y: 80,
+        y: 80,  
         size: 25,
         active: true
     },
@@ -221,11 +241,11 @@ function checkDeathItem() {
 
 
 const finish = {
-    x: 920,
-    y: 280,
+    x: 1120,
+    y: 520,
     size: 40,
     color: "gold"
-};
+}
 
 const player = {
     x: 50,
@@ -906,11 +926,38 @@ function checkFinish() {
         player.y + player.size > finish.y
     ) {
 
-        // nowypoziom
+        if (currentLevel >= 3) {
+
+            gameStarted = false;
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            ctx.fillStyle = "lime";
+
+            ctx.font = "50px Arial";
+
+            ctx.fillText(
+                "YOU WIN",
+                350,
+                180
+            );
+
+            return;
+        }
+
         currentLevel++;
-        levelMessage = "nowe level";
+
+        levelMessage =
+            "Level " +
+            currentLevel;
 
         generateWalls();
+
         generateHealthItem();
 
         generateRiddleItem();
@@ -1067,6 +1114,91 @@ function checkSpikes() {
 
 let lastSpikeHit = 0;
 
+function updateStats() {
+
+    document.getElementById(
+        "statLevel"
+    ).innerText =
+        currentLevel;
+
+    document.getElementById(
+        "statHP"
+    ).innerText =
+        player.health;
+
+    document.getElementById(
+        "statKeys"
+    ).innerText =
+        collectedKeys;
+
+}
+
+const enemy = {
+
+    x: 500,
+    y: 120,
+
+    width: 30,
+    height: 30,
+
+    speed: 2,
+
+    direction: 1
+
+};
+
+function drawEnemy() {
+
+    ctx.fillStyle = "orange";
+
+    ctx.fillRect(
+        enemy.x,
+        enemy.y,
+        enemy.width,
+        enemy.height
+    );
+
+}
+
+function moveEnemy() {
+
+    enemy.x +=
+        enemy.speed *
+        enemy.direction;
+
+    if (
+        enemy.x < 420 ||
+        enemy.x > 760
+    ) {
+
+        enemy.direction *= -1;
+
+    }
+
+}
+
+function checkEnemy() {
+
+    if (
+        player.x <
+        enemy.x + enemy.width &&
+
+        player.x + player.size >
+        enemy.x &&
+
+        player.y <
+        enemy.y + enemy.height &&
+
+        player.y + player.size >
+        enemy.y
+    ) {
+
+        player.health -= 1;
+
+    }
+
+}
+
 function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1091,6 +1223,8 @@ function gameLoop() {
     // rysowanie drzwi
     drawDoors();
 
+    drawEnemy();
+
     drawSpikes();
 
     // rysowanie kluczy
@@ -1112,7 +1246,11 @@ function gameLoop() {
 
     movePlayer();
 
+    moveEnemy();
+
     checkSpikes();
+
+    checkEnemy();
 
     // sprawdzenie przedmiotu apteczka
     checkHealthItem();
@@ -1134,6 +1272,8 @@ function gameLoop() {
     drawPlayer();
 
     drawGameOver();
+
+    updateStats();
 
     requestAnimationFrame(gameLoop);
 
