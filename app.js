@@ -111,3 +111,30 @@ submitRiddle.onclick = function () {
     }
 
 };
+
+const loadingScreen = document.getElementById("loadingScreen");
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.querySelector(".game-screen");
+const uiButtons = document.querySelector(".buttons");
+const playGameBtn = document.getElementById("playGameBtn");
+const openConfigStart = document.getElementById("openConfigStart");
+
+window.onload = function() {
+    setTimeout(() => {
+        loadingScreen.style.display = "none";
+        startScreen.style.display = "flex";
+    }, 1500); 
+};
+
+playGameBtn.onclick = function() {
+    startScreen.style.display = "none";
+    gameScreen.style.display = "block";
+    uiButtons.style.display = "flex";
+    
+    // Запускаем саму игру
+    startButton.click(); 
+};
+
+openConfigStart.onclick = function() {
+    configModal.style.display = "block";
+};
