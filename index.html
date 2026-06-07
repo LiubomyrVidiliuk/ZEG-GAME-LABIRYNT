@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZEG GAME</title>
-
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,39 +12,27 @@
 
         <h1>ZEG - GAME</h1>
 
-
         <div id="loadingScreen" class="overlay-screen">
             <h2>Ładowanie...</h2>
-        <div class="loader"></div>
+            <div class="loader"></div>
         </div>
-
 
         <div id="startScreen" class="overlay-screen" style="display: none;">
             <h1>ZEG - GAME</h1>
-        <div class="menu-buttons">
-            <button id="playGameBtn">Grać</button>
-            <button id="openConfigStart">Ustawienia</button>
+            <div class="menu-buttons">
+                <button id="playGameBtn">Grać</button>
+                <button id="openConfigStart">Ustawienia</button>
+            </div>
         </div>
-</div>
 
         <div class="game-screen">
-
             <canvas id="gameCanvas"></canvas>
-
         </div>
 
         <div class="buttons">
-
             <button>Start/Reset</button>
-
-            <button id="openStats">
-                Statystyka
-            </button>
-
-            <button id="openConfig">
-                Konfiguracja
-            </button>
-
+            <button id="openStats">Statystyka</button>
+            <button id="openConfig">Konfiguracja</button>
         </div>
 
     </main>
@@ -56,96 +43,40 @@
     </footer>
 
     <div class="modal" id="configModal">
-
         <div class="modal-content">
-
             <span class="close" id="closeConfig">✕</span>
-
-            <div class="modal-title">
-                Konfiguracja
+            <div class="modal-title">Konfiguracja</div>
+            <div style="padding: 20px; display: flex; flex-direction: column; gap: 15px;">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: black; font-size: 16px;">
+                    <input type="checkbox" id="musicToggle" checked> Включить музыку
+                </label>
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: black; font-size: 16px;">
+                    <input type="checkbox" id="soundToggle" checked> Включить звуки
+                </label>
             </div>
-
         </div>
-
     </div>
 
     <div class="modal" id="statsModal">
-
         <div class="modal-content">
-
             <span class="close" id="closeStats">✕</span>
-
             <div id="statsContent">
-
-                <p>Poziom:
-                    <span id="statLevel">1</span>
-                </p>
-
-             <p>HP:
-                <span id="statHP">100</span>
-            </p>
-
-            <p>Klucze:
-                <span id="statKeys">0</span>
-            </p>
+                <p>Poziom: <span id="statLevel">1</span></p>
+                <p>HP: <span id="statHP">100</span></p>
+                <p>Klucze: <span id="statKeys">0</span></p>
             </div>
-
         </div>
-
     </div>
 
     <div class="modal" id="riddleModal">
-
         <div class="modal-content">
-
-    <span class="close" id="closeRiddle">✕</span>
-
-    <div class="modal-title">
-        Zagadka Logiczna
-    </div>
-
-    <div
-        id="riddleQuestion"
-        style="
-            padding:30px;
-            text-align:center;
-            font-size:24px;
-        "
-    ></div>
-
-    <input
-        id="riddleAnswer"
-        type="number"
-        placeholder="Twoja odpowiedź"
-        style="
-            display:block;
-            margin:20px auto;
-            padding:10px;
-            width:220px;
-        "
-    >
-
-    <button
-        id="submitRiddle"
-        style="
-            display:block;
-            margin:auto;
-        "
-    >
-        Sprawdź
-    </button>
-
-    <div
-        id="riddleResult"
-        style="
-            text-align:center;
-            margin-top:20px;
-            font-size:20px;
-        "
-    ></div>
-
-</div>
-
+            <span class="close" id="closeRiddle">✕</span>
+            <div class="modal-title">Zagadka Logiczna</div>
+            <div id="riddleQuestion" style="padding:30px; text-align:center; font-size:24px;"></div>
+            <input id="riddleAnswer" type="number" placeholder="Twoja odpowiedź" style="display:block; margin:20px auto; padding:10px; width:220px;">
+            <button id="submitRiddle" style="display:block; margin:auto;">Sprawdź</button>
+            <div id="riddleResult" style="text-align:center; margin-top:20px; font-size:20px;"></div>
+        </div>
     </div> 
 
     <script src="app.js"></script>
