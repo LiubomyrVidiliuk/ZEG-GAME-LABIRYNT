@@ -16,10 +16,12 @@ let currentLevel = 1;
 let levelMessage = "";
 
 let walls = [];
+let emptyTiles = [];
 
 function generateWalls() {
 
     walls = [];
+    emptyTiles = []; 
 
     const mazeLevel1 = [
 
@@ -55,7 +57,7 @@ function generateWalls() {
 
 ];
 
-const mazeLevel2 = [
+    const mazeLevel2 = [
 
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
@@ -89,90 +91,91 @@ const mazeLevel2 = [
 
 ];
 
-const mazeLevel3 = [
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-    [1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
-    [1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
-    [1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1],
-    [1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
-    [1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
-    [1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1],
-    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
-    [1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1],
-    [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+    const mazeLevel3 = [
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,0,1],
+[1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+[1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1,1],
+[1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,1],
+[1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,1,1,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,0,1],
+[1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1,0,1],
+[1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,0,1,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-const levels = [
-    mazeLevel1,
-    mazeLevel2,
-    mazeLevel3
-];
-
-const maze =
-    levels[
-        Math.min(
-            currentLevel - 1,
-            levels.length - 1
-        )
+    const levels = [
+        mazeLevel1,
+        mazeLevel2,
+        mazeLevel3
     ];
 
-for (let row = 0; row < maze.length; row++) {
+    const maze =
+        levels[
+            Math.min(
+                currentLevel - 1,
+                levels.length - 1
+            )
+        ];
 
-    for (let col = 0; col < maze[row].length; col++) {
+    for (let row = 0; row < maze.length; row++) {
 
-        if (maze[row][col] === 1) {
+        for (let col = 0; col < maze[row].length; col++) {
 
-            walls.push({
+            if (maze[row][col] === 1) {
 
-                x: col * tileSize,
-                y: row * tileSize,
-                width: tileSize,
-                height: tileSize
+                walls.push({
 
-            });
+                    x: col * tileSize,
+                    y: row * tileSize,
+                    width: tileSize,
+                    height: tileSize
+
+                });
+
+            } else {
+
+                if (!(col <= 2 && row <= 2) && !(col >= 27 && row >= 13)) {
+
+                    emptyTiles.push({
+                        x: col * tileSize,
+                        y: row * tileSize
+                    });
+
+                }
+
+            }
 
         }
 
     }
 
 }
+
+function getRandomEmptySpot() {
+
+    if (emptyTiles.length === 0) return null;
+
+    const index = Math.floor(Math.random() * emptyTiles.length);
+
+    const spot = emptyTiles[index];
+
+    emptyTiles.splice(index, 1); 
+
+    return spot;
+
 }
 
-const deathItems = [];
-
-for (let i = 0; i < 2; i++) {
-
-    deathItems.push({
-        x: 0,
-        y: 0,
-        size: 25,
-        color: "white",
-        active: true
-    });
-
-}
+let deathItems = [];
 
 let collectedKeys = 0;
 
-const keyItems = [
-    {
-        x: 200,
-        y: 80,  
-        size: 25,
-        active: true
-    },
-    {
-        x: 720,
-        y: 240,
-        size: 25,
-        active: true
-    }
-];
+let keyItems = [];
 
 function drawKeys() {
 
@@ -218,62 +221,44 @@ function drawDeathItem() {
 
 function generateDeathItem() {
 
-    for (let item of deathItems) {
+    deathItems = [];
 
-        let validPosition = false;
+    for (let i = 0; i < 2; i++) {
 
-        while (!validPosition) {
+        const spot = getRandomEmptySpot();
 
-            const randomX = Math.floor(Math.random() * 24) * tileSize;
-            const randomY = Math.floor(Math.random() * 8) * tileSize;
+        if (spot) {
 
-            validPosition = true;
+            deathItems.push({
+                x: spot.x + (tileSize - 25) / 2,
+                y: spot.y + (tileSize - 25) / 2,
+                size: 25,
+                color: "white",
+                active: true
+            });
 
-            for (let wall of walls) {
+        }
 
-                if (
-                    randomX < wall.x + wall.width &&
-                    randomX + item.size > wall.x &&
-                    randomY < wall.y + wall.height &&
-                    randomY + item.size > wall.y
-                ) {
+    }
 
-                    validPosition = false;
-                    break;
+}
 
-                }
+function generateKeys() {
 
-            }
+    keyItems = [];
 
-            const blockedItems = [
-                healthItem,
-                riddleItem,
-                startPoint,
-                finish
-            ];
+    for (let i = 0; i < 2; i++) {
 
-            for (let blocked of blockedItems) {
+        const spot = getRandomEmptySpot();
 
-                if (
-                    randomX < blocked.x + blocked.size &&
-                    randomX + item.size > blocked.x &&
-                    randomY < blocked.y + blocked.size &&
-                    randomY + item.size > blocked.y
-                ) {
+        if (spot) {
 
-                    validPosition = false;
-                    break;
-
-                }
-
-            }
-
-            if (validPosition) {
-
-                item.x = randomX;
-                item.y = randomY;
-
-            }
+            keyItems.push({
+                x: spot.x + (tileSize - 20) / 2,
+                y: spot.y + (tileSize - 20) / 2,
+                size: 20,
+                active: true
+            });
 
         }
 
@@ -350,11 +335,9 @@ startButton.onclick = function () {
 
     generateDeathItem();
 
-    collectedKeys = 0;
+    generateKeys();
 
-    for (let key of keyItems) {
-        key.active = true;
-    }
+    collectedKeys = 0;
 
     for (let door of doors) {
          door.opened = false;
@@ -470,62 +453,13 @@ function drawRiddleItem() {
 
 function generateRiddleItem() {
 
-    let validPosition = false;
+    const spot = getRandomEmptySpot();
 
-    while (!validPosition) {
+    if (spot) {
 
-        const randomX = Math.floor(Math.random() * 24) * tileSize;
-        const randomY = Math.floor(Math.random() * 8) * tileSize;
-
-        validPosition = true;
-
-        for (let wall of walls) {
-
-            if (
-                randomX < wall.x + wall.width &&
-                randomX + riddleItem.size > wall.x &&
-                randomY < wall.y + wall.height &&
-                randomY + riddleItem.size > wall.y
-            ) {
-
-                validPosition = false;
-                break;
-
-            }
-
-        }
-
-        if (
-            validPosition &&
-            randomX < healthItem.x + healthItem.size &&
-            randomX + riddleItem.size > healthItem.x &&
-            randomY < healthItem.y + healthItem.size &&
-            randomY + riddleItem.size > healthItem.y
-        ) {
-
-            validPosition = false;
-
-        }
-
-        if (
-            validPosition &&
-            randomX < startPoint.x + startPoint.size &&
-            randomX + riddleItem.size > startPoint.x &&
-            randomY < startPoint.y + startPoint.size &&
-            randomY + riddleItem.size > startPoint.y
-        ) {
-
-            validPosition = false;
-
-        }
-
-        if (validPosition) {
-
-            riddleItem.x = randomX;
-            riddleItem.y = randomY;
-            riddleItem.active = true;
-
-        }
+        riddleItem.x = spot.x + (tileSize - riddleItem.size) / 2;
+        riddleItem.y = spot.y + (tileSize - riddleItem.size) / 2;
+        riddleItem.active = true;
 
     }
 
@@ -1029,6 +963,8 @@ function checkFinish() {
 
         generateDeathItem();
 
+        generateKeys();
+
         resetGame();
 
     }
@@ -1083,40 +1019,13 @@ function drawHealthItem() {
 
 function generateHealthItem() {
 
-    let validPosition = false;
+    const spot = getRandomEmptySpot();
 
-    while (!validPosition) {
+    if (spot) {
 
-        const randomX = Math.floor(Math.random() * 24) * tileSize;
-        const randomY = Math.floor(Math.random() * 8) * tileSize;
-
-        validPosition = true;
-
-        for (let wall of walls) {
-
-            if (
-                randomX < wall.x + wall.width &&
-                randomX + healthItem.size > wall.x &&
-                randomY < wall.y + wall.height &&
-                randomY + healthItem.size > wall.y
-            ) {
-
-                validPosition = false;
-
-                break;
-
-            }
-
-        }
-
-        if (validPosition) {
-
-            // tutaj jest nowa pozycja przedmiotu
-            healthItem.x = randomX;
-            healthItem.y = randomY;
-
-            healthItem.active = true;
-        }
+        healthItem.x = spot.x + (tileSize - healthItem.size) / 2;
+        healthItem.y = spot.y + (tileSize - healthItem.size) / 2;
+        healthItem.active = true;
 
     }
 
