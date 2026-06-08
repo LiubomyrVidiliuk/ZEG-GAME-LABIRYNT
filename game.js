@@ -20,10 +20,43 @@ let deathItems = [];
 let keyItems = [];
 let collectedKeys = 0;
 
-// Массивы динамических объектов для каждого уровня
 let doors = [];
 let spikes = [];
 let enemies = [];
+
+function goFullScreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(err => console.log(err));
+    }
+    const gameScreenEl = document.querySelector(".game-screen");
+    if (gameScreenEl) {
+        gameScreenEl.style.position = "fixed";
+        gameScreenEl.style.top = "0";
+        gameScreenEl.style.left = "0";
+        gameScreenEl.style.width = "100vw";
+        gameScreenEl.style.height = "100vh";
+        gameScreenEl.style.zIndex = "99";
+        gameScreenEl.style.borderRadius = "0";
+    }
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach(m => m.style.zIndex = "99999");
+}
+
+document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+        const gameScreenEl = document.querySelector(".game-screen");
+        if (gameScreenEl) {
+            gameScreenEl.style.position = "relative";
+            gameScreenEl.style.top = "";
+            gameScreenEl.style.left = "";
+            gameScreenEl.style.width = "70%";
+            gameScreenEl.style.height = "370px";
+            gameScreenEl.style.zIndex = "";
+            gameScreenEl.style.borderRadius = "10px";
+        }
+    }
+});
 
 function generateWalls() {
     walls = [];
@@ -96,7 +129,6 @@ function generateWalls() {
                     height: tileSize
                 });
             } else {
-                // Исключаем стартовую и финишную зоны из пустых тайлов
                 if (!(col <= 2 && row <= 2) && !(col >= 27 && row >= 13)) {
                     emptyTiles.push({
                         x: col * tileSize,
@@ -107,7 +139,6 @@ function generateWalls() {
         }
     }
 
-    // Очистка и генерация строго под каждый уровень (гарантированно не в стенах)
     doors = [];
     spikes = [];
     enemies = [];
@@ -249,6 +280,7 @@ document.addEventListener("keyup", function (event) {
 });
 
 startButton.onclick = function () {
+    goFullScreen();
     resetGame();
     generateWalls();
     generateHealthItem();
@@ -278,7 +310,7 @@ function resetGame() {
     player.y = 50;
     player.health = player.maxHealth;
     gameOver = false;
-    currentLevel = 1; // Безопасный сброс уровня на первый при перезапуске
+    currentLevel = 1;
 }
 
 function checkGameOver() {
@@ -441,7 +473,6 @@ function drawSpikes() {
     }
 }
 
-// Попиксельное разделение осей для идеального скольжения вдоль стен
 function movePlayer() {
     if (!gameStarted) return;
 
@@ -458,19 +489,16 @@ function movePlayer() {
 
     if (keys["w"]) nextY -= player.speed;
     if (keys["s"]) nextY += player.speed;
-    // Проверка коллизии по вертикали
     if (!checkWallCollision(player.x, nextY)) {
         player.y = nextY;
     }
 
     if (keys["a"]) nextX -= player.speed;
     if (keys["d"]) nextX += player.speed;
-    // Проверка коллизии по горизонтали
     if (!checkWallCollision(nextX, player.y)) {
         player.x = nextX;
     }
 
-    // Границы экрана
     if (player.x < 0) player.x = 0;
     if (player.y < 0) player.y = 0;
     if (player.x + player.size > canvas.width) player.x = canvas.width - player.size;
@@ -553,7 +581,6 @@ function checkFinish() {
         generateDeathItem();
         generateKeys();
         
-        // Сброс позиции игрока на старт при переходе, без сброса уровня
         player.x = 50;
         player.y = 50;
     }
