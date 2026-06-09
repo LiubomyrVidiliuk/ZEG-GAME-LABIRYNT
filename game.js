@@ -4,7 +4,32 @@ const ctx = canvas.getContext("2d");
 canvas.width = 1200;
 canvas.height = 600;
 
-const startButton = document.querySelector(".buttons button");
+const imgPlayer = new Image();
+imgPlayer.src = "gracz.png";
+
+const imgKey = new Image();
+imgKey.src = "key.png";
+
+const imgDeath = new Image();
+imgDeath.src = "death.png";
+
+const imgDoors = new Image();
+imgDoors.src = "doors.png";
+
+const imgSpikes = new Image();
+imgSpikes.src = "spikes.png";
+
+const imgZagadka = new Image();
+imgZagadka.src = "zagadka.png";
+
+const imgDuch = new Image();
+imgDuch.src = "duch.png";
+
+const imgWyjscie = new Image();
+imgWyjscie.src = "wyjscie.png";
+
+const imgHp = new Image();
+imgHp.src = "hp.png";
 
 let gameStarted = false;
 let gameOver = false;
@@ -192,18 +217,16 @@ function getRandomEmptySpot() {
 }
 
 function drawKeys() {
-    ctx.fillStyle = "cyan";
     for (let key of keyItems) {
         if (!key.active) continue;
-        ctx.fillRect(key.x, key.y, key.size, key.size);
+        ctx.drawImage(imgKey, key.x - 12, key.y - 12, key.size + 24, key.size + 24);
     }
 }
 
 function drawDeathItem() {
     for (let item of deathItems) {
         if (!item.active) continue;
-        ctx.fillStyle = item.color;
-        ctx.fillRect(item.x, item.y, item.size, item.size);
+        ctx.drawImage(imgDeath, item.x - 10, item.y - 10, item.size + 20, item.size + 20);
     }
 }
 
@@ -216,7 +239,6 @@ function generateDeathItem() {
                 x: spot.x + (tileSize - 25) / 2,
                 y: spot.y + (tileSize - 25) / 2,
                 size: 25,
-                color: "white",
                 active: true
             });
         }
@@ -255,8 +277,7 @@ function checkDeathItem() {
 const finish = {
     x: 1120,
     y: 520,
-    size: 40,
-    color: "gold"
+    size: 40
 };
 
 const player = {
@@ -264,7 +285,6 @@ const player = {
     y: 50,
     size: 30,
     speed: 5,
-    color: "lime",
     health: 100,
     maxHealth: 100
 };
@@ -279,21 +299,26 @@ document.addEventListener("keyup", function (event) {
     keys[event.key.toLowerCase()] = false;
 });
 
-startButton.onclick = function () {
-    goFullScreen();
-    resetGame();
-    generateWalls();
-    generateHealthItem();
-    generateRiddleItem();
-    generateDeathItem();
-    generateKeys();
-    collectedKeys = 0;
+document.addEventListener("DOMContentLoaded", () => {
+    const startButton = document.querySelector(".buttons button");
+    if (startButton) {
+        startButton.onclick = function () {
+            goFullScreen();
+            resetGame();
+            generateWalls();
+            generateHealthItem();
+            generateRiddleItem();
+            generateDeathItem();
+            generateKeys();
+            collectedKeys = 0;
 
-    for (let door of doors) {
-         door.opened = false;
+            for (let door of doors) {
+                 door.opened = false;
+            }
+            gameStarted = true;
+        };
     }
-    gameStarted = true;
-};
+});
 
 const riddles = [
     { question: "5 + 7", answer: 12 },
@@ -321,6 +346,11 @@ function checkGameOver() {
     }
 }
 
+function drawRiddleItem() {
+    if (!riddleItem.active) return;
+    ctx.drawImage(imgZagadka, riddleItem.x - 10, riddleItem.y - 10, riddleItem.size + 20, riddleItem.size + 20);
+}
+
 function drawGameOver() {
     if (!gameOver) return;
     ctx.fillStyle = "red";
@@ -332,15 +362,8 @@ const riddleItem = {
     x: 0,
     y: 0,
     size: 25,
-    color: "purple",
     active: true
 };
-
-function drawRiddleItem() {
-    if (!riddleItem.active) return;
-    ctx.fillStyle = riddleItem.color;
-    ctx.fillRect(riddleItem.x, riddleItem.y, riddleItem.size, riddleItem.size);
-}
 
 function generateRiddleItem() {
     const spot = getRandomEmptySpot();
@@ -361,10 +384,16 @@ function checkRiddleItem() {
     ) {
         riddleItem.active = false;
         currentRiddle = riddles[Math.floor(Math.random() * riddles.length)];
-        document.getElementById("riddleQuestion").innerText = currentRiddle.question;
-        document.getElementById("riddleAnswer").value = "";
-        document.getElementById("riddleResult").innerText = "";
-        document.getElementById("riddleModal").style.display = "block";
+        
+        const rq = document.getElementById("riddleQuestion");
+        const ra = document.getElementById("riddleAnswer");
+        const rr = document.getElementById("riddleResult");
+        const rm = document.getElementById("riddleModal");
+        
+        if (rq) rq.innerText = currentRiddle.question;
+        if (ra) ra.value = "";
+        if (rr) rr.innerText = "";
+        if (rm) rm.style.display = "block";
     }
 }
 
@@ -389,11 +418,11 @@ function drawKeysCounter() {
     ctx.fillText("Keys: " + collectedKeys, 850, 60);
 }
 
+// ОГРОМНЫЕ ДВЕРИ: увеличены в 3 раза (120x120 пикселей) и отцентрованы на -40px
 function drawDoors() {
     for (let door of doors) {
         if (door.opened) continue;
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(door.x, door.y, door.width, door.height);
+        ctx.drawImage(imgDoors, door.x - 40, door.y - 40, door.width * 3, door.height * 3);
     }
 }
 
@@ -451,25 +480,20 @@ function checkWallCollision(x, y) {
 }
 
 function isAnyModalOpen() {
+    const configModal = document.getElementById("configModal");
+    const statsModal = document.getElementById("statsModal");
+    const riddleModal = document.getElementById("riddleModal");
+
     return (
-        getComputedStyle(configModal).display !== "none" ||
-        getComputedStyle(statsModal).display !== "none" ||
-        getComputedStyle(riddleModal).display !== "none"
+        (configModal && getComputedStyle(configModal).display !== "none") ||
+        (statsModal && getComputedStyle(statsModal).display !== "none") ||
+        (riddleModal && getComputedStyle(riddleModal).display !== "none")
     );
 }
 
 function drawSpikes() {
-    ctx.fillStyle = "silver";
     for (let spike of spikes) {
-        const toothWidth = 10;
-        const count = Math.floor(spike.width / toothWidth);
-        for (let i = 0; i < count; i++) {
-            ctx.beginPath();
-            ctx.moveTo(spike.x + i * toothWidth, spike.y + spike.height);
-            ctx.lineTo(spike.x + i * toothWidth + toothWidth / 2, spike.y);
-            ctx.lineTo(spike.x + (i + 1) * toothWidth, spike.y + spike.height);
-            ctx.fill();
-        }
+        ctx.drawImage(imgSpikes, spike.x - 5, spike.y - 15, spike.width + 10, spike.height + 15);
     }
 }
 
@@ -541,8 +565,7 @@ function drawWalls() {
 }
 
 function drawFinish() {
-    ctx.fillStyle = finish.color;
-    ctx.fillRect(finish.x, finish.y, finish.size, finish.size);
+    ctx.drawImage(imgWyjscie, finish.x - 10, finish.y - 10, finish.size + 20, finish.size + 20);
 }
 
 function drawLevel() {
@@ -552,8 +575,7 @@ function drawLevel() {
 }
 
 function drawPlayer() {
-    ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.size, player.size);
+    ctx.drawImage(imgPlayer, player.x - 10, player.y - 10, player.size + 20, player.size + 20);
 }
 
 function checkFinish() {
@@ -596,14 +618,12 @@ const healthItem = {
     x: 0,
     y: 0,
     size: 25,
-    color: "red",
     active: true
 };
 
 function drawHealthItem() {
     if (!healthItem.active) return;
-    ctx.fillStyle = healthItem.color;
-    ctx.fillRect(healthItem.x, healthItem.y, healthItem.size, healthItem.size);
+    ctx.drawImage(imgHp, healthItem.x - 10, healthItem.y - 10, healthItem.size + 20, healthItem.size + 20);
 }
 
 function generateHealthItem() {
@@ -623,11 +643,8 @@ function checkHealthItem() {
         player.y < healthItem.y + healthItem.size &&
         player.y + player.size > healthItem.y
     ) {
-        player.health += 20;
-        if (player.health > player.maxHealth) {
-           player.health = player.maxHealth;
-        }
         healthItem.active = false;
+        player.health = Math.min(player.maxHealth, player.health + 20);
     }
 }
 
@@ -651,15 +668,18 @@ function checkSpikes() {
 }
 
 function updateStats() {
-    document.getElementById("statLevel").innerText = currentLevel;
-    document.getElementById("statHP").innerText = player.health;
-    document.getElementById("statKeys").innerText = collectedKeys;
+    const sLevel = document.getElementById("statLevel");
+    const sHP = document.getElementById("statHP");
+    const sKeys = document.getElementById("statKeys");
+    
+    if (sLevel) sLevel.innerText = currentLevel;
+    if (sHP) sHP.innerText = player.health;
+    if (sKeys) sKeys.innerText = collectedKeys;
 }
 
 function drawEnemy() {
-    ctx.fillStyle = "orange";
     for (let e of enemies) {
-        ctx.fillRect(e.x, e.y, e.width, e.height);
+        ctx.drawImage(imgDuch, e.x - 10, e.y - 10, e.width + 20, e.height + 20);
     }
 }
 
